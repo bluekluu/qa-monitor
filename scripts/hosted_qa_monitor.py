@@ -14,7 +14,9 @@ import html
 import json
 import os
 import re
+import subprocess
 import sys
+import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -125,6 +127,50 @@ def load_projects() -> list[Project]:
     return projects
 
 
+def http_get_with_curl(url: str, timeout: int) -> tuple[int | None, dict[str, str], str, str]:
+    try:
+        with tempfile.NamedTemporaryFile() as header_file, tempfile.NamedTemporaryFile() as body_file:
+            result = subprocess.run(
+                [
+                    "curl",
+                    "--location",
+                    "--silent",
+                    "--show-error",
+                    "--max-time",
+                    str(timeout),
+                    "--user-agent",
+                    "Codex-QA/1.0",
+                    "--dump-header",
+                    header_file.name,
+                    "--output",
+                    body_file.name,
+                    "--write-out",
+                    "%{http_code}\n%{url_effective}\n",
+                    url,
+                ],
+                capture_output=True,
+                text=True,
+                timeout=timeout + 5,
+                check=False,
+            )
+            header_text = Path(header_file.name).read_text(errors="replace")
+            body = Path(body_file.name).read_text(errors="replace")
+    except Exception as exc:
+        return None, {}, f"curl fallback failed: {exc}", url
+
+    meta = result.stdout.splitlines()
+    headers: dict[str, str] = {}
+    for line in header_text.splitlines():
+        if ":" in line:
+            key, value = line.split(":", 1)
+            headers[key.strip().lower()] = value.strip()
+    if meta and re.fullmatch(r"\d{3}", meta[0]):
+        return int(meta[0]), headers, body, meta[1].strip() if len(meta) > 1 else url
+    if result.stderr:
+        return None, headers, result.stderr.strip(), url
+    return None, headers, body, url
+
+
 def http_get(url: str, timeout: int = 25) -> tuple[int | None, dict[str, str], str, str]:
     req = urllib.request.Request(url, headers={"User-Agent": "Codex-QA/1.0"})
     try:
@@ -136,7 +182,10 @@ def http_get(url: str, timeout: int = 25) -> tuple[int | None, dict[str, str], s
         body = exc.read(200_000).decode("utf-8", errors="replace")
         return exc.code, {}, body, exc.url
     except Exception as exc:
-        return None, {}, str(exc), url
+        curl_status, curl_headers, curl_body, curl_url = http_get_with_curl(url, timeout)
+        if curl_status is not None:
+            return curl_status, curl_headers, curl_body, curl_url
+        return None, {}, f"{exc}; {curl_body}", url
 
 
 def is_number(value: object) -> bool:
@@ -171,7 +220,28 @@ def gh_api(path: str, method: str = "GET", payload: dict[str, object] | None = N
         except Exception:
             return exc.code, {"message": raw}
     except Exception as exc:
-        return None, {"message": str(exc)}
+        cli_status, cli_data = gh_api_with_cli(path, method, payload)
+        if cli_status is not None:
+            return cli_status, cli_data
+        return None, {"message": f"{exc}; {cli_data}"}
+
+
+def gh_api_with_cli(path: str, method: str, payload: dict[str, object] | None) -> tuple[int | None, object]:
+    command = ["gh", "api", "-X", method, path.lstrip("/")]
+    input_data = None
+    if payload is not None:
+        command.extend(["--input", "-"])
+        input_data = json.dumps(payload)
+    try:
+        result = subprocess.run(command, input=input_data, capture_output=True, text=True, timeout=30, check=False)
+    except Exception as exc:
+        return None, str(exc)
+    if result.returncode != 0:
+        return None, result.stderr.strip()
+    try:
+        return 200 if method == "GET" else 201, json.loads(result.stdout) if result.stdout.strip() else {}
+    except Exception:
+        return 200 if method == "GET" else 201, result.stdout
 
 
 def open_issue_map(project: Project) -> dict[str, str]:
@@ -182,6 +252,8 @@ def open_issue_map(project: Project) -> dict[str, str]:
     for issue in data:
         body = issue.get("body") or ""
         url = issue.get("html_url") or ""
+        for match in re.finditer(r"TC-[A-Z0-9-]+", body):
+            issues[f"case:{match.group(0)}"] = url
         for match in re.finditer(r"qa-bug:([A-Za-z0-9_-]+):([a-f0-9]{16})", body):
             if match.group(1) == project.name:
                 issues[match.group(2)] = url
@@ -236,7 +308,7 @@ def file_issues(project: Project, cases: list[Case], apply: bool) -> list[Case]:
         if case.status == "FAIL":
             evidence = case.failures[0] if case.failures else case.title
             fp = fingerprint(project, case, evidence)
-            issue_url = issues.get(fp, "")
+            issue_url = issues.get(fp, "") or issues.get(f"case:{case.testcase_id}", "")
             if apply and not issue_url:
                 labels = list(dict.fromkeys([*project.labels, case.severity, case.area]))
                 for label in labels:
