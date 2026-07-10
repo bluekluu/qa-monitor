@@ -1,0 +1,39 @@
+name: Daily QA Monitor
+
+on:
+  schedule:
+    - cron: "30 15 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run QA monitor
+        env:
+          LCC_LIVE_URL: ${{ secrets.LCC_LIVE_URL }}
+          GH_TOKEN: ${{ secrets.QA_BUGBOT_TOKEN || github.token }}
+        run: |
+          set +e
+          python scripts/hosted_qa_monitor.py --apply
+          echo "QA_EXIT_CODE=$?" >> "$GITHUB_ENV"
+
+      - name: Commit updated monitor
+        run: |
+          git config user.name "qa-monitor-bot"
+          git config user.email "qa-monitor-bot@users.noreply.github.com"
+          git add index.html archive data
+          git commit -m "Update QA monitor $(date -u +%F)" || echo "No changes"
+          git push
+
+      - name: Propagate QA status
+        run: exit "$QA_EXIT_CODE"

@@ -1,11 +1,9 @@
 {
-  "generated_at": "2026-07-09T23:38:33",
+  "generated_at": "2026-07-10T06:57:00+00:00",
   "projects": [
     {
       "name": "JobAlerts",
       "repo": "bluekluu/job-alerts",
-      "profile": "job-alerts-live-page",
-      "public_url": "https://bluekluu.github.io/job-alerts/",
       "status": "PASS",
       "cases": [
         {
@@ -34,52 +32,8 @@
     {
       "name": "LongevityCommandCenter",
       "repo": "bluekluu/longevity-command-center",
-      "profile": "cloudflare-worker-app",
-      "public_url": "",
       "status": "FAIL",
       "cases": [
-        {
-          "id": "TC-P1-LCC-FILES-001",
-          "title": "Required Worker files must exist",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P1-LCC-WRANGLER-001",
-          "title": "Wrangler config must define the Worker entrypoint, KV binding, and cron",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P1-LCC-SECRETS-001",
-          "title": "Local secrets must stay ignored and token literals must not appear in source/docs",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P1-LCC-SYNTAX-001",
-          "title": "Worker modules must pass JavaScript syntax checks",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P1-LCC-TEMPLATE-001",
-          "title": "Dashboard template placeholders must match renderer replacements",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P1-LCC-BEHAVIOR-001",
-          "title": "Worker behavior contract must preserve privacy, scheduling, and token rotation guarantees",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
         {
           "id": "TC-P1-LCC-LIVE-001",
           "title": "Live dashboard URL should load when configured",

@@ -1,0 +1,21 @@
+{
+  "projects": [
+    {
+      "name": "JobAlerts",
+      "enabled": true,
+      "github_repo": "bluekluu/job-alerts",
+      "qa_profile": "job-alerts-live-page",
+      "public_url": "https://bluekluu.github.io/job-alerts/",
+      "labels": ["bug", "codex-filed", "needs-codex-fix"]
+    },
+    {
+      "name": "LongevityCommandCenter",
+      "enabled": true,
+      "github_repo": "bluekluu/longevity-command-center",
+      "qa_profile": "cloudflare-worker-app",
+      "public_url": "",
+      "live_url_env": "LCC_LIVE_URL",
+      "labels": ["bug", "codex-filed", "needs-codex-fix"]
+    }
+  ]
+}
