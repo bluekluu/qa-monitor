@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-09T23:25:08",
+  "generated_at": "2026-07-09T23:31:46",
   "projects": [
     {
       "name": "JobAlerts",
@@ -11,19 +11,22 @@
           "id": "TC-P0-DATE-001",
           "title": "Weekday/date must be calendar-correct",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P0-LINK-001",
           "title": "Job links in Full-Time Roles and Fractional & Advisory must be valid and not broken",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P0-REASON-001",
           "title": "Filtered Out discard/status reasons must match observed link behavior",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         }
       ]
     },
@@ -37,49 +40,57 @@
           "id": "TC-P1-LCC-FILES-001",
           "title": "Required Worker files must exist",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-WRANGLER-001",
           "title": "Wrangler config must define the Worker entrypoint, KV binding, and cron",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-SECRETS-001",
           "title": "Local secrets must stay ignored and token literals must not appear in source/docs",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-SYNTAX-001",
           "title": "Worker modules must pass JavaScript syntax checks",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-TEMPLATE-001",
           "title": "Dashboard template placeholders must match renderer replacements",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-BEHAVIOR-001",
           "title": "Worker behavior contract must preserve privacy, scheduling, and token rotation guarantees",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-LIVE-001",
           "title": "Live dashboard URL should load when configured",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-DATA-001",
           "title": "Live DATA object must have required schema and plausible numeric ranges",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-FRESHNESS-001",
@@ -87,25 +98,29 @@
           "status": "FAIL",
           "failures": [
             "All live vitals report `No data`"
-          ]
+          ],
+          "issue_url": "https://github.com/bluekluu/longevity-command-center/issues/1"
         },
         {
           "id": "TC-P1-LCC-PLAN-001",
           "title": "Live plan focus must match the 12-week schedule",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-AGGREGATES-001",
           "title": "Live trend and swim aggregates must be internally consistent",
           "status": "PASS",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         },
         {
           "id": "TC-P2-LCC-SOURCE-001",
           "title": "Optional source-of-truth validation should compare live DATA to WHOOP/KV when credentials are provided",
           "status": "SKIP",
-          "failures": []
+          "failures": [],
+          "issue_url": ""
         }
       ]
     }
