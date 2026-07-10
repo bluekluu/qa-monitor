@@ -1,30 +1,18 @@
 {
-  "generated_at": "2026-07-10T06:58:05+00:00",
+  "generated_at": "2026-07-10T16:35:47+00:00",
   "projects": [
     {
       "name": "JobAlerts",
       "repo": "bluekluu/job-alerts",
-      "status": "PASS",
+      "status": "FAIL",
       "cases": [
         {
-          "id": "TC-P0-DATE-001",
-          "title": "Weekday/date must be calendar-correct",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P0-LINK-001",
-          "title": "Job links in Full-Time Roles and Fractional & Advisory must be valid and not broken",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P0-REASON-001",
-          "title": "Filtered Out discard/status reasons must match observed link behavior",
-          "status": "PASS",
-          "failures": [],
+          "id": "TC-P0-JOBALERTS-LIVE-001",
+          "title": "JobAlerts live page must load",
+          "status": "FAIL",
+          "failures": [
+            "Live page returned HTTP NO_STATUS"
+          ],
           "issue_url": ""
         }
       ]
@@ -37,45 +25,22 @@
         {
           "id": "TC-P1-LCC-LIVE-001",
           "title": "Live dashboard URL should load when configured",
-          "status": "PASS",
-          "failures": [],
+          "status": "FAIL",
+          "failures": [
+            "Live dashboard returned HTTP NO_STATUS",
+            "Live dashboard content type is not HTML",
+            "Live dashboard response is missing `cache-control: no-store`",
+            "Rendered dashboard data is missing or template placeholder is exposed"
+          ],
           "issue_url": ""
         },
         {
           "id": "TC-P1-LCC-DATA-001",
           "title": "Live DATA object must have required schema and plausible numeric ranges",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P1-LCC-FRESHNESS-001",
-          "title": "Live DATA freshness must match current PT date or acceptable sync lag",
           "status": "FAIL",
           "failures": [
-            "All live vitals report `No data`"
+            "`const DATA =` was not found"
           ],
-          "issue_url": "https://github.com/bluekluu/longevity-command-center/issues/1"
-        },
-        {
-          "id": "TC-P1-LCC-PLAN-001",
-          "title": "Live plan focus must match the 12-week schedule",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P1-LCC-AGGREGATES-001",
-          "title": "Live trend and swim aggregates must be internally consistent",
-          "status": "PASS",
-          "failures": [],
-          "issue_url": ""
-        },
-        {
-          "id": "TC-P2-LCC-SOURCE-001",
-          "title": "Optional source-of-truth validation should compare live DATA to WHOOP/KV when credentials are provided",
-          "status": "SKIP",
-          "failures": [],
           "issue_url": ""
         }
       ]

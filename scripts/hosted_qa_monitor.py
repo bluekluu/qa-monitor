@@ -474,7 +474,7 @@ def render_project(report: ProjectReport) -> str:
 
 def render_page(reports: list[ProjectReport], archive_links: list[str]) -> str:
     overall = "FAIL" if any(report.status == "FAIL" for report in reports) else "PASS"
-    generated = dt.datetime.now(dt.UTC).strftime("%Y-%m-%d %H:%M:%S UTC")
+    generated = dt.datetime.now(PT).strftime("%Y-%m-%d %I:%M:%S %p %Z")
     cards = "\n".join(render_project(report) for report in reports)
     archive = "\n".join(f'<li><a href="{esc(link)}">{esc(Path(link).stem)}</a></li>' for link in archive_links[:30])
     return f"""<!doctype html>
