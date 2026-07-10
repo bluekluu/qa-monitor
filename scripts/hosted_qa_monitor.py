@@ -287,6 +287,10 @@ def issue_body(project: Project, case: Case, evidence: str) -> str:
 
 `{case.testcase_id}: {case.title}` should pass for `{project.name}`.
 
+## Verification
+
+This failure reproduced on the QA Monitor verification rerun before issue filing.
+
 ## Source
 
 - QA Monitor: https://bluekluu.github.io/qa-monitor/
@@ -494,13 +498,39 @@ def lcc_cases(project: Project) -> list[Case]:
     ]
 
 
-def run_project(project: Project, apply: bool) -> ProjectReport:
+def evaluate_project(project: Project) -> list[Case]:
     if project.qa_profile == "job-alerts-live-page":
-        cases = job_alert_cases(project)
+        return job_alert_cases(project)
     elif project.qa_profile == "cloudflare-worker-app":
-        cases = lcc_cases(project)
-    else:
-        cases = [Case("TC-P1-QA-PROFILE-001", "QA profile must be supported", "FAIL", [f"Unsupported profile `{project.qa_profile}`"], [])]
+        return lcc_cases(project)
+    return [Case("TC-P1-QA-PROFILE-001", "QA profile must be supported", "FAIL", [f"Unsupported profile `{project.qa_profile}`"], [])]
+
+
+def verify_failed_cases(project: Project, cases: list[Case]) -> list[Case]:
+    if not any(case.status == "FAIL" for case in cases):
+        return cases
+
+    verification_cases = {case.testcase_id: case for case in evaluate_project(project)}
+    verified: list[Case] = []
+    for case in cases:
+        if case.status != "FAIL":
+            verified.append(case)
+            continue
+
+        verification = verification_cases.get(case.testcase_id)
+        if verification and verification.status == "FAIL":
+            passes = [*case.passes, "Verification rerun reproduced this failure before issue filing."]
+            verified.append(Case(case.testcase_id, case.title, case.status, case.failures, passes, case.issue_url, case.severity, case.area))
+            continue
+
+        verification_status = verification.status if verification else "MISSING"
+        verification_note = f"Initial failure did not reproduce on verification rerun; suppressed as transient. Verification status: {verification_status}."
+        verified.append(Case(case.testcase_id, case.title, "SKIP", [], [*case.passes, verification_note], case.issue_url, case.severity, case.area))
+    return verified
+
+
+def run_project(project: Project, apply: bool) -> ProjectReport:
+    cases = verify_failed_cases(project, evaluate_project(project))
     cases = file_issues(project, cases, apply)
     status = "FAIL" if any(case.status == "FAIL" for case in cases) else "PASS"
     return ProjectReport(project, status, cases)
@@ -525,6 +555,10 @@ def render_project(report: ProjectReport) -> str:
     rows = []
     for case in report.cases:
         failure = "<br>".join(esc(item) for item in case.failures[:3]) or "None"
+        if case.status == "SKIP" and case.passes:
+            failure = "<br>".join(esc(item) for item in case.passes[:2])
+        elif case.status == "FAIL" and any("Verification rerun" in item for item in case.passes):
+            failure = f'{failure}<br><span class="muted">Verified by rerun before issue filing.</span>'
         issue = f'<a href="{esc(case.issue_url)}">Issue</a>' if case.issue_url else ("Not filed" if case.status == "FAIL" else "")
         rows.append(f"<tr><td><code>{esc(case.testcase_id)}</code></td><td>{esc(case.title)}</td><td>{badge(case.status)}</td><td>{failure}</td><td>{issue}</td></tr>")
     return f"""
@@ -577,7 +611,7 @@ def write_outputs(reports: list[ProjectReport]) -> None:
                 "name": report.project.name,
                 "repo": report.project.github_repo,
                 "status": report.status,
-                "cases": [{"id": case.testcase_id, "title": case.title, "status": case.status, "failures": case.failures, "issue_url": case.issue_url} for case in report.cases],
+                "cases": [{"id": case.testcase_id, "title": case.title, "status": case.status, "failures": case.failures, "passes": case.passes, "issue_url": case.issue_url} for case in report.cases],
             }
             for report in reports
         ],

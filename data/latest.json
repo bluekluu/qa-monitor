@@ -1,25 +1,32 @@
 {
-  "generated_at": "2026-07-10T16:49:10+00:00",
+  "generated_at": "2026-07-10T17:05:50+00:00",
   "projects": [
     {
       "name": "JobAlerts",
       "repo": "bluekluu/job-alerts",
-      "status": "FAIL",
+      "status": "PASS",
       "cases": [
         {
           "id": "TC-P0-DATE-001",
           "title": "Weekday/date must be calendar-correct",
-          "status": "FAIL",
-          "failures": [
-            "Expected PT date `Friday, Jul 10 2026` was not found"
+          "status": "PASS",
+          "failures": [],
+          "passes": [
+            "Expected PT date appears on the page",
+            "Known bad date strings are absent"
           ],
-          "issue_url": "https://github.com/bluekluu/job-alerts/issues/39"
+          "issue_url": ""
         },
         {
           "id": "TC-P0-LINK-001",
           "title": "Job links in Full-Time Roles and Fractional & Advisory must be valid and not broken",
           "status": "PASS",
           "failures": [],
+          "passes": [
+            "Included job link validated: job-boards.greenhouse.io",
+            "Included job link validated: www.amazon.jobs",
+            "Included job link validated: www.okta.com"
+          ],
           "issue_url": ""
         },
         {
@@ -27,6 +34,9 @@
           "title": "Filtered Out discard/status reasons must match observed link behavior",
           "status": "PASS",
           "failures": [],
+          "passes": [
+            "Hosted monitor currently treats Filtered Out reason validation as a local/deeper check."
+          ],
           "issue_url": ""
         }
       ]
@@ -41,6 +51,13 @@
           "title": "Live dashboard URL should load when configured",
           "status": "PASS",
           "failures": [],
+          "passes": [
+            "Live dashboard returned HTTP 200",
+            "Live dashboard content type is HTML",
+            "Live dashboard response includes `cache-control: no-store`",
+            "Rendered dashboard data is present and template placeholder is not exposed",
+            "Live dashboard has generated content"
+          ],
           "issue_url": ""
         },
         {
@@ -48,6 +65,16 @@
           "title": "Live DATA object must have required schema and plausible numeric ranges",
           "status": "PASS",
           "failures": [],
+          "passes": [
+            "`DATA.goals` exists",
+            "`DATA.vitals` exists",
+            "`DATA.week` exists",
+            "`DATA.swim` exists",
+            "`DATA.meta` exists",
+            "`DATA.bottom` exists",
+            "`DATA.recommendation` exists",
+            "`DATA.vitals` has four cards"
+          ],
           "issue_url": ""
         },
         {
@@ -57,6 +84,11 @@
           "failures": [
             "All live vitals report `No data`"
           ],
+          "passes": [
+            "`DATA.meta.todayKey` matches current PT/UTC date",
+            "`DATA.meta.hasRecoveryToday` is boolean",
+            "Verification rerun reproduced this failure before issue filing."
+          ],
           "issue_url": "https://github.com/bluekluu/longevity-command-center/issues/1"
         },
         {
@@ -64,6 +96,11 @@
           "title": "Live plan focus must match the 12-week schedule",
           "status": "PASS",
           "failures": [],
+          "passes": [
+            "Today's lifting focus matches schedule",
+            "Today's swim focus matches schedule",
+            "Nutrition target includes protein guidance"
+          ],
           "issue_url": ""
         },
         {
@@ -71,6 +108,10 @@
           "title": "Live trend and swim aggregates must be internally consistent",
           "status": "PASS",
           "failures": [],
+          "passes": [
+            "Week trend arrays all have seven entries",
+            "Swim session count matches `weeklyCount`"
+          ],
           "issue_url": ""
         },
         {
@@ -78,6 +119,9 @@
           "title": "Optional source-of-truth validation should compare live DATA to WHOOP/KV when credentials are provided",
           "status": "SKIP",
           "failures": [],
+          "passes": [
+            "Skipped by design; direct source credentials are not used by the public monitor."
+          ],
           "issue_url": ""
         }
       ]
