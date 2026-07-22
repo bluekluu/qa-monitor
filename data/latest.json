@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T16:56:27+00:00",
+  "generated_at": "2026-07-22T16:57:25+00:00",
   "projects": [
     {
       "name": "JobAlerts",
@@ -23,6 +23,7 @@
           "status": "PASS",
           "failures": [],
           "passes": [
+            "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: www.amazon.jobs",
             "Included job link validated: www.okta.com"
