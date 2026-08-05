@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-04T17:14:04+00:00",
+  "generated_at": "2026-08-05T17:04:13+00:00",
   "projects": [
     {
       "name": "JobAlerts",
@@ -23,7 +23,6 @@
           "status": "PASS",
           "failures": [],
           "passes": [
-            "Included job link validated: databricks.com",
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: jobs.ashbyhq.com",
@@ -85,7 +84,7 @@
           "title": "Live DATA freshness must match current PT date or acceptable sync lag",
           "status": "FAIL",
           "failures": [
-            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-08-04` or `2026-08-04`",
+            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-08-05` or `2026-08-05`",
             "All live vitals report `No data`"
           ],
           "passes": [
