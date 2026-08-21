@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-20T16:00:34+00:00",
+  "generated_at": "2026-08-21T15:59:31+00:00",
   "projects": [
     {
       "name": "JobAlerts",
@@ -24,8 +24,7 @@
           "failures": [],
           "passes": [
             "Included job link validated: job-boards.greenhouse.io",
-            "Included job link validated: jobs.ashbyhq.com",
-            "Included job link validated: www.okta.com"
+            "Included job link validated: jobs.ashbyhq.com"
           ],
           "issue_url": ""
         },
@@ -82,7 +81,7 @@
           "title": "Live DATA freshness must match current PT date or acceptable sync lag",
           "status": "FAIL",
           "failures": [
-            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-08-20` or `2026-08-20`",
+            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-08-21` or `2026-08-21`",
             "All live vitals report `No data`"
           ],
           "passes": [
