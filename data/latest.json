@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-31T20:59:23+00:00",
+  "generated_at": "2026-09-01T18:44:34+00:00",
   "projects": [
     {
       "name": "JobAlerts",
@@ -82,7 +82,7 @@
           "title": "Live DATA freshness must match current PT date or acceptable sync lag",
           "status": "FAIL",
           "failures": [
-            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-08-31` or `2026-08-31`",
+            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-09-01` or `2026-09-01`",
             "All live vitals report `No data`"
           ],
           "passes": [
