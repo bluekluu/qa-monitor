@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-01T20:26:19+00:00",
+  "generated_at": "2026-10-02T20:05:48+00:00",
   "projects": [
     {
       "name": "JobAlerts",
       "repo": "bluekluu/job-alerts",
-      "status": "FAIL",
+      "status": "PASS",
       "cases": [
         {
           "id": "TC-P0-DATE-001",
@@ -20,19 +20,16 @@
         {
           "id": "TC-P0-LINK-001",
           "title": "Job links in Full-Time Roles and Fractional & Advisory must be valid and not broken",
-          "status": "FAIL",
-          "failures": [
-            "Included job link failed validation: HTTP 404 www.okta.com"
-          ],
+          "status": "PASS",
+          "failures": [],
           "passes": [
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: job-boards.greenhouse.io",
-            "Included job link validated: www.amazon.jobs",
-            "Verification rerun reproduced this failure before issue filing."
+            "Included job link validated: www.okta.com"
           ],
-          "issue_url": "https://github.com/bluekluu/job-alerts/issues/41"
+          "issue_url": ""
         },
         {
           "id": "TC-P0-REASON-001",
@@ -87,7 +84,7 @@
           "title": "Live DATA freshness must match current PT date or acceptable sync lag",
           "status": "FAIL",
           "failures": [
-            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-10-01` or `2026-10-01`",
+            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-10-02` or `2026-10-02`",
             "All live vitals report `No data`"
           ],
           "passes": [
