@@ -1,21 +1,23 @@
 {
-  "generated_at": "2026-10-31T19:28:45+00:00",
+  "generated_at": "2026-11-01T19:51:50+00:00",
   "projects": [
     {
       "name": "JobAlerts",
       "repo": "bluekluu/job-alerts",
-      "status": "PASS",
+      "status": "FAIL",
       "cases": [
         {
           "id": "TC-P0-DATE-001",
           "title": "Weekday/date must be calendar-correct",
-          "status": "PASS",
-          "failures": [],
-          "passes": [
-            "Expected PT date appears on the page",
-            "Known bad date strings are absent"
+          "status": "FAIL",
+          "failures": [
+            "Expected PT date `Sunday, Nov 1 2026` was not found"
           ],
-          "issue_url": ""
+          "passes": [
+            "Known bad date strings are absent",
+            "Verification rerun reproduced this failure before issue filing."
+          ],
+          "issue_url": "https://github.com/bluekluu/job-alerts/issues/42"
         },
         {
           "id": "TC-P0-LINK-001",
@@ -27,7 +29,6 @@
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: www.amazon.jobs",
-            "Included job link validated: www.coinbase.com",
             "Included job link validated: www.okta.com"
           ],
           "issue_url": ""
@@ -85,7 +86,7 @@
           "title": "Live DATA freshness must match current PT date or acceptable sync lag",
           "status": "FAIL",
           "failures": [
-            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-10-31` or `2026-10-31`",
+            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-11-01` or `2026-11-01`",
             "All live vitals report `No data`"
           ],
           "passes": [
