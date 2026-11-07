@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-06T21:00:01+00:00",
+  "generated_at": "2026-11-07T19:33:12+00:00",
   "projects": [
     {
       "name": "JobAlerts",
@@ -11,7 +11,7 @@
           "title": "Weekday/date must be calendar-correct",
           "status": "FAIL",
           "failures": [
-            "Expected PT date `Friday, Nov 6 2026` was not found"
+            "Expected PT date `Saturday, Nov 7 2026` was not found"
           ],
           "passes": [
             "Known bad date strings are absent",
@@ -29,6 +29,7 @@
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: job-boards.greenhouse.io",
             "Included job link validated: www.amazon.jobs",
+            "Included job link validated: www.okta.com",
             "Included job link validated: www.okta.com"
           ],
           "issue_url": ""
@@ -86,7 +87,7 @@
           "title": "Live DATA freshness must match current PT date or acceptable sync lag",
           "status": "FAIL",
           "failures": [
-            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-11-06` or `2026-11-06`",
+            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-11-07` or `2026-11-07`",
             "All live vitals report `No data`"
           ],
           "passes": [
