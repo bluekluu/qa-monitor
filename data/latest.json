@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T21:23:18+00:00",
+  "generated_at": "2026-11-11T22:09:35+00:00",
   "projects": [
     {
       "name": "JobAlerts",
@@ -11,7 +11,7 @@
           "title": "Weekday/date must be calendar-correct",
           "status": "FAIL",
           "failures": [
-            "Expected PT date `Tuesday, Nov 10 2026` was not found"
+            "Expected PT date `Wednesday, Nov 11 2026` was not found"
           ],
           "passes": [
             "Known bad date strings are absent",
@@ -86,7 +86,7 @@
           "title": "Live DATA freshness must match current PT date or acceptable sync lag",
           "status": "FAIL",
           "failures": [
-            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-11-10` or `2026-11-10`",
+            "`DATA.meta.todayKey` is `2026-07-27`, expected `2026-11-11` or `2026-11-11`",
             "All live vitals report `No data`"
           ],
           "passes": [
